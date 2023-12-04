@@ -51,18 +51,11 @@ private func lookForSuroundingNumbers(
 ) {
     // Up-left
     if row > 0 && col > 0 {
-        let isAdjacentNumber = schematic[row - 1][col - 1].isNumber
-        let numberWasVisited = visitedIndices.contains([row - 1, col - 1])
-        
-        if isAdjacentNumber, !numberWasVisited {
-            // Identify the entire number if we have a single digit
-            engineSchematicSum += searchFullNumber(
-                in: schematic[row - 1],
-                currentRowIdx: row - 1,
-                currentColIdx: col - 1,
-                visitedIndices: &visitedIndices
-            )
-        }
+        lookForNumberInDirection(
+            targetRow: row - 1, targetCol: col - 1,
+            schematic: schematic, visitedIndices: &visitedIndices,
+            engineSchematicSum: &engineSchematicSum
+        )
     }
     
     // Up
@@ -180,8 +173,3 @@ private func searchFullNumber(
     
     return num
 }
-
-// 4. For every number you find in any of the directions listed above, look for the entire number as we need to sum not only the single digit we found
-// 5. Then, check if this number was already added to the "added" indices
-// 6. Once you've find the number completely and added it to the sum, make all of its indices non available for addition anymore
-// 7. Repeat
