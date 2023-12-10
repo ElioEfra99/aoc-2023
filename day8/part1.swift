@@ -33,27 +33,31 @@ for node in map {
     nodes[key] = [values[0], values[1]]
 }
 
-var steps = 0
-var instructionsCount = 0
-
-while true {
-    if instructions[instructionsCount] == "L" {
-        currentNode = nodes[currentNode]![0]
-    } else {
-        currentNode = nodes[currentNode]![1]
-    }
+private func gatherNecessarySteps(nodes: [String: [String]]) -> Int {
+    var steps = 0
+    var instructionsCount = 0
     
-    if instructionsCount == instructions.count - 1 {
-        instructionsCount = 0
-    } else {
-        instructionsCount += 1
-    }
+    while true {
+        if instructions[instructionsCount] == "L" {
+            currentNode = nodes[currentNode]![0]
+        } else {
+            currentNode = nodes[currentNode]![1]
+        }
         
-    steps += 1
-    
-    if currentNode == lastNode {
-        break
+        if instructionsCount == instructions.count - 1 {
+            instructionsCount = 0
+        } else {
+            instructionsCount += 1
+        }
+        
+        steps += 1
+        
+        if currentNode == lastNode {
+            break
+        }
     }
+    
+    return steps
 }
 
-print("Required Steps: \(steps)")
+print("Required Steps: \(gatherNecessarySteps(nodes: nodes))")
